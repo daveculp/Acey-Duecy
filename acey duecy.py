@@ -2,7 +2,7 @@ import random
 import time 
 
 class Card:
-	text_values = (None,"Ace","2","3","4","5","6","7","8","9","10","Jack","Queen", "King")
+	text_values = (None,None,"2","3","4","5","6","7","8","9","10","Jack","Queen", "King", "Ace")
 	suits = ("Clubs", "Diamonds", "Hearts", "Spades")
 	
 	def __init__(self, value, suit):
@@ -37,40 +37,26 @@ class Card:
 	def __eq__(self, card):
 		if (self.value == card.value):
 			return True
-		else:
-			return False
+		return False
 			
 	def between(self, card1, card2):
-		vals = [card1.value, card2.value]
-		vals.sort()
-
-		if (vals[0] == vals[1] == self.value):
-			card1_suit = Card.suits.index(card1.suit)
-			card2_suit = Card.suits.index(card2.suit)
-			suits = [card1_suit, card2_suit]
-			suits.sort()
-			if suits[0] <  Card.suits.index(self.suit) < suits[1]:
-				return True
-			else:
-				return False
-			
-		if vals[0] < self.value < vals[1]:
-			return True
+		if (card1.value == card2.value) or (card1.value < card2.value):
+			return card1 < self < card2
 		else:
-			return False
-		
-		
+			return card2 < self < card1
+	
 	def __str__(self):
 		return '{0} of {1}'.format(Card.text_values[self.value], self.suit)
 
 class Deck:
 	def __init__(self):
+		random.seed()
 		self.construct()
 
 	def construct(self):
 		self.cards = []
 		for suit in Card.suits:
-			for value in range(1,14):
+			for value in range(2,15):
 				self.cards.append(Card(value,suit))
 				
 	def shuffle(self):
@@ -99,13 +85,6 @@ class Deck:
 		for card in self.cards:
 			card.show()
 
-print ("Testing between")
-
-card1 = Card(6,"Spades")
-card2 = Card(6,"Diamonds")
-card3 = Card(6,"Clubs")
-
-print(card2.between(card3, card1) )
 print ("""
 This is the game of Acey-Duecy.  You start with a set amount of money.
 Each turn you will be dealt two cards.  You will then place a bet,
@@ -159,10 +138,15 @@ while money > 0 and deck.len() >0:
 	if deck.len() <=2:
 		print("We have run though the deck!")
 		break
-		
-print("\n"*4)
-print("-----------------------------------------------------")		
-print ("Game over!")
+
+print("-----------------------------------------------------")
+for i in range(10):		
+	print (" "*i+"Game over!")
+	time.sleep(.1)
+for i in range(10,0,-1):
+	print (" "*i+"Game over!")
+	time.sleep(.1)
+
 print ("You ended with ${0}".format(money))
 		
 		
