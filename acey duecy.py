@@ -86,12 +86,16 @@ class Deck:
 			card.show()
 
 print ("""
-This is the game of Acey-Duecy.  You start with a set amount of money.
-Each turn you will be dealt two cards.  You will then place a bet,
-betting whether the next card dealt will be between the first two cards.
+This is the game of Acey-Duecy.  
 
-In this game, the value of an Ace = 1
+You start with $200 and each turn you will be dealt two cards.  You will
+then place a bet,betting whether the next card dealt will be between the
+first two cards.
 
+In this game, the value of an Ace = 13
+Suit order is clubs, diamonds, hearts, spades.
+
+The game continues until you have no money or the deck runs out.
 """)
 
 deck = Deck()
@@ -101,7 +105,7 @@ money = 200
 while money > 0 and deck.len() >0:
 	
 	time.sleep(1)
-	print("-----------------------------------------------------")
+	print(80*"=")
 	print("You have ${0}".format(money) )
 	
 	card1 = deck.get_next()
@@ -139,7 +143,7 @@ while money > 0 and deck.len() >0:
 		print("We have run though the deck!")
 		break
 
-print("-----------------------------------------------------")
+print(80*"=")
 for i in range(10):		
 	print (" "*i+"Game over!")
 	time.sleep(.1)
