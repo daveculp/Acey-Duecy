@@ -1,7 +1,7 @@
 import random
 import time 
 
-class Card:
+class Card: 
 	text_values = (None,None,"2","3","4","5","6","7","8","9","10","Jack","Queen", "King", "Ace")
 	suits = ("Clubs", "Diamonds", "Hearts", "Spades")
 	
