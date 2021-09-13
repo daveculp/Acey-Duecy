@@ -55,12 +55,17 @@ class Deck:
 
 	def construct(self):
 		self.cards = []
+		self.discards = []
 		for suit in Card.suits:
 			for value in range(2,15):
 				self.cards.append(Card(value,suit))
 				
 	def shuffle(self):
+		self.cards.extend(self.discards)
 		random.shuffle(self.cards)
+		
+	def order(self):
+		self.cards.sort()
 		
 	def choose(self, remove = False):
 		if len(self.cards) == 0:
@@ -68,6 +73,7 @@ class Deck:
 		card = random.choice(self.cards)
 		if remove:
 			self.cards.remove(card)
+			self.discards.append(card)
 		return card
 		
 	def get_next(self,remove = True):
@@ -76,6 +82,8 @@ class Deck:
 		card = self.cards.pop(0)
 		if remove==False:
 			self.cards.append(card)
+		else:
+			self.discards.append(card)
 		return card
 		
 	def len(self):
@@ -101,8 +109,8 @@ The game continues until you have no money or the deck runs out.
 deck = Deck()
 deck.shuffle()
 money = 200
-
-while money > 0 and deck.len() >0:
+game_running = True
+while game_running:
 	
 	time.sleep(1)
 	print(80*"=")
@@ -132,16 +140,17 @@ while money > 0 and deck.len() >0:
 	elif bet > 0:
 		print ("Sorry, you lose!")
 		money -= bet
+		if money <=0:
+			game_running = False
+			print ("YOU HAVE RUN OUT OF MONEY!!")
 	time.sleep(1)
 	
-	time.sleep(1)
 	print ("Cards left in the deck {0}".format( deck.len() ) )
 	
-
-
 	if deck.len() <=2:
-		print("We have run though the deck!")
-		break
+		print("We have run though the deck! There will not be enough")
+		print("cards for another draw.")
+		game_running = False
 
 print(80*"=")
 for i in range(10):		
