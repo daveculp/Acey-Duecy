@@ -6,6 +6,7 @@ class Card:
 	suits = ("Clubs", "Diamonds", "Hearts", "Spades")
 	
 	def __init__(self, value, suit):
+		""" value (2-14) and suit(0-3) are ints """
 		self.value = value
 		self.suit = suit
 	
@@ -61,7 +62,7 @@ class Deck:
 	def order(self):
 		self.cards.sort()
 		
-	def choose(self, remove = False):
+	def choose_random(self, remove = False):
 		if len(self.cards) == 0:
 			return None
 		card = random.choice(self.cards)
@@ -82,9 +83,6 @@ class Deck:
 		
 	def __len__(self):
 		return len(self.cards)
-		
-#	def len(self):
-#		return len(self.cards)
 
 	def show(self):
 		for card in self.cards:
