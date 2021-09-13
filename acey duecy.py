@@ -117,6 +117,7 @@ while game_running:
 	
 	card1 = deck.get_next()
 	card2 = deck.get_next()
+	#this while loop prints the cards and gets the player bet
 	while True:
 		time.sleep(.5)
 		print(80*"=")
@@ -130,7 +131,7 @@ while game_running:
 			continue
 		bet = int(bet)
 		if (bet <= money) and (bet >= 0):
-			break
+			break  #break out of while loop, bet has been taken
 		time.sleep(.5)
 		print("That is not a legal bet! Try again!")
 	
