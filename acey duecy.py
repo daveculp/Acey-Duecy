@@ -8,15 +8,6 @@ class Card:
 	def __init__(self, value, suit):
 		self.value = value
 		self.suit = suit
-		
-	def show(self):
-		print ( '{0} of {1}'.format(Card.text_values[self.value], Card.suits[self.suit]) )
-		
-	def get_value(self):
-		return self.value
-		
-	def get_suit(self):
-		return self.suit
 	
 	def get_suit_text(self):
 		return Card.suits[self.suit]
@@ -106,13 +97,13 @@ You start with $200 and each turn you will be dealt two cards.  You will
 then place a bet,betting whether the next card dealt will be between the
 first two cards.
 
-Text values of face cards:
+Numerical values of face cards:
 Jack = 11
 Queen = 12
 King = 13
 Ace = 14
 
-Suit order is clubs, diamonds, hearts, spades.
+Suit order from low to high is clubs, diamonds, hearts, spades.
 
 The game continues until you have no money or the deck runs out.
 """)
@@ -178,6 +169,7 @@ for i in range(10,0,-1):
 	time.sleep(.1)
 
 print ("You ended with ${0}".format(money))
+
 		
 		
 	
