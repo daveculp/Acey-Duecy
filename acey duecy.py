@@ -10,19 +10,22 @@ class Card:
 		self.suit = suit
 		
 	def show(self):
-		print ( '{0} of {1}'.format(Card.text_values[self.value], self.suit) )
+		print ( '{0} of {1}'.format(Card.text_values[self.value], Card.suits[self.suit]) )
 		
 	def get_value(self):
 		return self.value
 		
 	def get_suit(self):
 		return self.suit
+	
+	def get_suit_text(self):
+		return Card.suits[self.suit]
 		
 	def __lt__(self, card):
 		if self.value < card.value:
 			return True
 		if self.value == card.value:
-			if Card.suits.index(self.suit) < Card.suits.index(card.suit):
+			if self.suit < card.suit:
 				return True
 		return False
 		
@@ -30,7 +33,7 @@ class Card:
 		if self.value > card.value:
 			return True
 		if self.value == card.value:
-			if Card.suits.index(self.suit) > Card.suits.index(card.suit):
+			if self.suit > card.suit:
 				return True
 		return False	
 		
@@ -46,7 +49,7 @@ class Card:
 			return card2 < self < card1
 	
 	def __str__(self):
-		return '{0} of {1}'.format(Card.text_values[self.value], self.suit)
+		return '{0} of {1}'.format(Card.text_values[self.value], Card.suits[self.suit])
 
 class Deck:
 	def __init__(self):
@@ -56,7 +59,7 @@ class Deck:
 	def construct(self):
 		self.cards = []
 		self.discards = []
-		for suit in Card.suits:
+		for suit in range(len(Card.suits)):
 			for value in range(2,15):
 				self.cards.append(Card(value,suit))
 				
@@ -86,8 +89,11 @@ class Deck:
 			self.discards.append(card)
 		return card
 		
-	def len(self):
+	def __len__(self):
 		return len(self.cards)
+		
+#	def len(self):
+#		return len(self.cards)
 
 	def show(self):
 		for card in self.cards:
@@ -100,7 +106,12 @@ You start with $200 and each turn you will be dealt two cards.  You will
 then place a bet,betting whether the next card dealt will be between the
 first two cards.
 
-In this game, the value of an Ace = 13
+Text values of face cards:
+Jack = 11
+Queen = 12
+King = 13
+Ace = 14
+
 Suit order is clubs, diamonds, hearts, spades.
 
 The game continues until you have no money or the deck runs out.
@@ -110,26 +121,32 @@ deck = Deck()
 deck.shuffle()
 money = 200
 game_running = True
+
 while game_running:
-	
-	time.sleep(1)
-	print(80*"=")
-	print("You have ${0}".format(money) )
 	
 	card1 = deck.get_next()
 	card2 = deck.get_next()
-	
-	print ("Card 1:", card1)
-	print ("Card 2:", card2)
-	
-	bet = money+1
-	while (bet > money) and (bet > 0):
+	while True:
+		time.sleep(.5)
+		print(80*"=")
+		print("You have ${0}".format(money) )
+		print ("Card 1:", card1)
+		print ("Card 2:", card2)
+		
 		bet = input ("What is your bet? ")
+		if bet.isdigit() == False:
+			print("You have to enter an actual number!")
+			continue
 		bet = int(bet)
-	time.sleep(2)
+		if (bet <= money) and (bet >= 0):
+			break
+		time.sleep(.5)
+		print("That is not a legal bet! Try again!")
+	
+	time.sleep(.5)
 	if bet == 0:
-		print("Thats a chicken bet!")
-		time.sleep(1)
+		print("Really? A whole $0?")
+		time.sleep(.5)
 		
 	card3 = deck.get_next()
 	print ("Card 3:", card3)
@@ -145,9 +162,9 @@ while game_running:
 			print ("YOU HAVE RUN OUT OF MONEY!!")
 	time.sleep(1)
 	
-	print ("Cards left in the deck {0}".format( deck.len() ) )
+	print ("Cards left in the deck {0}".format( len(deck) ) )
 	
-	if deck.len() <=2:
+	if len(deck) <=2:
 		print("We have run though the deck! There will not be enough")
 		print("cards for another draw.")
 		game_running = False
