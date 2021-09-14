@@ -4,8 +4,8 @@ print ("""
 This is the game of Acey-Duecy.  
 
 You start with $200 and each turn you will be dealt two cards.  You will
-then place a bet,betting whether the next card dealt will be between the
-first two cards.
+then place a bet, betting whether the next card dealt will be between 
+the first two cards.
 
 Numerical values of face cards:
 Jack = 11
@@ -27,6 +27,7 @@ while game_running:
 	
 	card1 = deck.get_next()
 	card2 = deck.get_next()
+	
 	#this while loop prints the cards and gets the player bet
 	while True:
 		time.sleep(.5)
@@ -45,6 +46,7 @@ while game_running:
 		time.sleep(.5)
 		print("That is not a legal bet! Try again!")
 	
+	#if the player placed a bet of $0, print a message
 	time.sleep(.5)
 	if bet == 0:
 		print("Really? A whole $0?")
@@ -59,27 +61,38 @@ while game_running:
 	elif bet > 0:
 		print ("Sorry, you lose!")
 		money -= bet
-		if money <=0:
-			game_running = False
-			print ("YOU HAVE RUN OUT OF MONEY!!")
-	time.sleep(1)
+		
 	
 	print ("Cards left in the deck {0}".format( len(deck) ) )
+	time.sleep(.5)
 	
-	if len(deck) <=2:
+	#check game end
+	if money <=0:
+		game_running = False
+		print ("YOU HAVE RUN OUT OF MONEY!!")
+	elif len(deck) <=2:
 		print("We have run though the deck! There will not be enough")
 		print("cards for another draw.")
 		game_running = False
+		
+	#if over, print message and ask the user if they want to play again!	
+	if game_running == False:
+		print(80*"=")
+		print ("You ended with ${0}".format(money))
+		for i in range(10):		
+			print (" "*i+"Game over!")
+			time.sleep(.1)
+		for i in range(10,-1,-1):
+			print (" "*i+"Game over!")
+			time.sleep(.1)
+		again = input("Play again? (y/n)")
+		if again[0].lower() == "y":
+			print ("Resetting game....")
+			money = 200
+			deck.shuffle()
+			game_running = True
 
-print(80*"=")
-for i in range(10):		
-	print (" "*i+"Game over!")
-	time.sleep(.1)
-for i in range(10,-1,-1):
-	print (" "*i+"Game over!")
-	time.sleep(.1)
-
-print ("You ended with ${0}".format(money))
+print ("Thanks for playing!")
 
 		
 		
