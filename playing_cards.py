@@ -57,6 +57,7 @@ class Deck:
 				
 	def shuffle(self):
 		self.cards.extend(self.discards)
+		self.discards = []
 		random.shuffle(self.cards)
 		
 	def order(self):
