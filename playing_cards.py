@@ -83,6 +83,12 @@ class Deck:
 		
 	def __len__(self):
 		return len(self.cards)
+		
+	def is_empty(self):
+		if len(self.cards) == 0:
+			return True
+		else:
+			return False
 
 	def show(self):
 		for card in self.cards:
