@@ -57,6 +57,7 @@ class Deck:
 				
 	def shuffle(self):
 		self.cards.extend(self.discards)
+		self.discards = []
 		random.shuffle(self.cards)
 		
 	def order(self):
@@ -83,6 +84,12 @@ class Deck:
 		
 	def __len__(self):
 		return len(self.cards)
+		
+	def is_empty(self):
+		if len(self.cards) == 0:
+			return True
+		else:
+			return False
 
 	def show(self):
 		for card in self.cards:

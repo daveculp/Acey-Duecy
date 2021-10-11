@@ -33,14 +33,15 @@ while game_running:
 		time.sleep(.5)
 		print(80*"=")
 		print("You have ${0}".format(money) )
-		print ("Card 1:", card1)
-		print ("Card 2:", card2)
+		print ("Card 1:{0}".format(card1) )
+		print ("Card 2:{0}".format(card2) )
 		
+		#get player bet and check that it is legal
 		bet = input ("What is your bet? ")
 		if bet.isdigit() == False:
 			print("You have to enter an actual number!")
 			continue
-		bet = int(bet)
+		bet = int(bet) #we passed the above test, its a number
 		if (bet <= money) and (bet >= 0):
 			break  #break out of while loop, bet has been taken
 		time.sleep(.5)
@@ -51,17 +52,17 @@ while game_running:
 	if bet == 0:
 		print("Really? A whole $0?")
 		time.sleep(.5)
-		
-	card3 = deck.get_next()
-	print ("Card 3:", card3)
-	time.sleep(1)
+	
+	card3 = deck.get_next() 
+	print ("Card 3:{0}".format(card3) )
+	time.sleep(.5)
+	
 	if card3.between(card1,card2) and bet > 0:
 		print ("YOU WIN!!!")
 		money += bet
 	elif bet > 0:
 		print ("Sorry, you lose!")
 		money -= bet
-		
 	
 	print ("Cards left in the deck {0}".format( len(deck) ) )
 	time.sleep(.5)
@@ -70,7 +71,7 @@ while game_running:
 	if money <=0:
 		game_running = False
 		print ("YOU HAVE RUN OUT OF MONEY!!")
-	elif len(deck) <=2:
+	elif len(deck) < 3:
 		print("We have run though the deck! There will not be enough")
 		print("cards for another draw.")
 		game_running = False
