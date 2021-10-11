@@ -92,7 +92,7 @@ while game_running:
 			deck.shuffle()
 			game_running = True
 
-print ("Thanks for playing!")
+print ("Thanks for playing acey duecy!!")
 
 		
 		
