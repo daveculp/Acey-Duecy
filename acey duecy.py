@@ -15,6 +15,8 @@ Ace = 14
 
 Suit order from low to high is clubs, diamonds, hearts, spades.
 
+Minimum bet is $10.
+
 The game continues until you have no money or the deck runs out.
 """)
 
@@ -37,26 +39,27 @@ while game_running:
 		print ("Card 2:{0}".format(card2) )
 		
 		#get player bet and check that it is legal
-		bet = input ("What is your bet? ")
+		bet = input ("What is your bet [$10]? ")
+		if bet == "":
+			bet = "10"
 		if bet.isdigit() == False:
 			print("You have to enter an actual number!")
 			continue
 		bet = int(bet) #we passed the above test, its a number
+		if bet<10:
+			print("The minimum bet is $10.  Please try again!")
+			continue
 		if (bet <= money) and (bet >= 0):
 			break  #break out of while loop, bet has been taken
 		time.sleep(.5)
 		print("That is not a legal bet! Try again!")
 	
-	#if the player placed a bet of $0, print a message
-	time.sleep(.5)
-	if bet == 0:
-		print("Really? A whole $0?")
-		time.sleep(.5)
-	
+	#get the third card
 	card3 = deck.get_next() 
 	print ("Card 3:{0}".format(card3) )
 	time.sleep(.5)
 	
+	#check if it is between the first two
 	if card3.between(card1,card2) and bet > 0:
 		print ("YOU WIN!!!")
 		money += bet
@@ -68,7 +71,7 @@ while game_running:
 	time.sleep(.5)
 	
 	#check game end
-	if money <=0:
+	if money < 10 :
 		game_running = False
 		print ("YOU HAVE RUN OUT OF MONEY!!")
 	elif len(deck) < 3:
