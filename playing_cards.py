@@ -40,7 +40,9 @@ class Card:
 			return card1 < self < card2
 		else:
 			return card2 < self < card1
-	
+	def show(self):
+		print ( '{0} of {1}'.format(Card.card_values[self.value], Card.suits[self.suit]) )
+		
 	def __str__(self):
 		return '{0} of {1}'.format(Card.card_values[self.value], Card.suits[self.suit])
 		
@@ -66,7 +68,6 @@ class Deck:
 			for i in range(len(self.cards)-1,0,-1):
 				r = random.randint(0,i)
 				self.cards[i],self.cards[r] = self.cards[r],self.cards[i]
-		self.show()
 
 	def order(self):
 		self.cards.sort()
