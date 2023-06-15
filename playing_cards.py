@@ -60,6 +60,7 @@ class Deck:
 				self.cards.append(Card(value,suit))
 				
 	def shuffle(self):
+		#first put any discards back into the deck and then empty the discards
 		self.cards.extend(self.discards)
 		self.discards = []
 		#random.shuffle(self.cards)

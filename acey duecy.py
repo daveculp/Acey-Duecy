@@ -40,7 +40,8 @@ while game_running:
 		card1,card2 = card2,card1
 	
 	#this while loop prints the cards and gets the player bet
-	while True:
+	bet_complete = False
+	while not bet_complete:
 		time.sleep(.5)
 		print(80*"=")
 		print("You have ${0}".format(player.money) )
@@ -51,19 +52,18 @@ while game_running:
 		#get player bet and check that it is legal
 		bet = input ("What is your bet [$10]? ")
 		if bet == "":
-			bet = 10
-			break
+			bet = "10"
+			bet_complete = True
 		if bet.isdigit() == False:
 			print("You have to enter an actual number!")
-			continue
+			bet_complete = False
 		bet = int(bet) #we passed the above test, its a number
 		if bet<10:
 			print("The minimum bet is $10.  Please try again!")
-			continue
-		if (bet <= player.money) and (bet >= 0):
-			break  #break out of while loop, bet has been taken
+			bet_complete = False
+		elif (bet <= player.money) and (bet >= 0):
+			bet_complete = True  #break out of while loop, bet has been taken
 		time.sleep(.5)
-		print("That is not a legal bet! Try again!")
 	#END WHILE
 	
 	print("YOU HAVE BET: ${0}".format(bet) )
@@ -102,7 +102,10 @@ while game_running:
 		for i in range(10,-1,-1):
 			print (" "*i+"Game over!")
 			time.sleep(.1)
+	
 		again = input("Play again? (y/n)")
+		if again == "":
+			again = "y"
 		if again[0].lower() == "y":
 			print ("Resetting game....")
 			player.money = 200
