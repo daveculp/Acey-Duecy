@@ -95,8 +95,9 @@ class Deck:
 	        else:  # Default: place at the bottom
 	            self.cards.append(card)  
 	
-	    else:
-	        self.discards.append(card)
+	    	else:
+	        	self.discards.append(card)
+		    
 	return card
 		
 	def __len__(self):
