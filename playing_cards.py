@@ -31,9 +31,7 @@ class Card:
 		return False	
 		
 	def __eq__(self, card):
-		if (self.value == card.value):
-			return True
-		return False
+		return self.value == card.value
 			
 	def between(self, card1, card2):
 		return min(card1, card2) < self < max(card1, card2)
@@ -51,11 +49,8 @@ class Deck:
 		self.construct()
 
 	def construct(self):
-		self.cards = []
-		self.discards = []
-		for suit in range(len(Card.suits)):
-			for value in range(2,15):
-				self.cards.append(Card(value,suit))
+    		self.cards = [Card(value, suit) for suit in range(4) for value in range(2, 15)]
+    		self.discards = []
 				
 	def shuffle(self):
 		#first put any discards back into the deck and then empty the discards
@@ -90,7 +85,7 @@ class Deck:
 		if len(self.cards) == 0:
 			return None
 		card = self.cards.pop(0)
-		if remove==False:
+		if not remove:
 			self.cards.append(card)
 		else:
 			self.discards.append(card)
