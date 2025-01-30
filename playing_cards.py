@@ -36,10 +36,8 @@ class Card:
 		return False
 			
 	def between(self, card1, card2):
-		if (card1.value == card2.value) or (card1.value < card2.value):
-			return card1 < self < card2
-		else:
-			return card2 < self < card1
+		return min(card1, card2) < self < max(card1, card2)
+		
 	def show(self):
 		print ( '{0} of {1}'.format(Card.card_values[self.value], Card.suits[self.suit]) )
 		
@@ -63,15 +61,20 @@ class Deck:
 		#first put any discards back into the deck and then empty the discards
 		self.cards.extend(self.discards)
 		self.discards = []
-		#random.shuffle(self.cards)
-		
-		for k in range (0,4):
-			for i in range(len(self.cards)-1,0,-1):
-				r = random.randint(0,i)
-				self.cards[i],self.cards[r] = self.cards[r],self.cards[i]
+		random.shuffle(self.cards)
 
-	def order(self):
-		self.cards.sort()
+	def cut(self):
+	    if len(self.cards) < 2:
+	        return  # Not enough cards to cut
+	
+	    middle = len(self.cards) // 2
+	    range_limit = min(8, middle)  # Ensures we don't go out of bounds
+	    cut_point = random.randint(middle - range_limit, middle + range_limit)
+	
+	    # Perform the cut
+	    self.cards = self.cards[cut_point:] + self.cards[:cut_point]
+		def order(self):
+			self.cards.sort()
 		
 	def choose_random(self, remove = True):
 		if len(self.cards) == 0:
