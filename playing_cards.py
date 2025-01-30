@@ -81,15 +81,24 @@ class Deck:
 			self.discards.append(card)
 		return card
 		
-	def get_next(self,remove = True):
-		if len(self.cards) == 0:
-			return None
-		card = self.cards.pop(0)
-		if not remove:
-			self.cards.append(card)
-		else:
-			self.discards.append(card)
-		return card
+	def get_next(self, remove=True, place="bottom"):
+	    if not self.cards:
+	        return None
+	
+	    card = self.cards.pop(0)  # Take the top card
+	
+	    if not remove:
+	        if place == "top":
+	            self.cards.insert(0, card)  # Put it back on top
+	        elif place == "random":
+	            self.cards.insert(random.randint(0, len(self.cards)), card)  # Insert randomly
+	        else:  # Default: place at the bottom
+	            self.cards.append(card)  
+	
+	    else:
+	        self.discards.append(card)
+
+    return card
 		
 	def __len__(self):
 		return len(self.cards)
