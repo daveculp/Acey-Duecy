@@ -73,8 +73,9 @@ class Deck:
 	
 	    # Perform the cut
 	    self.cards = self.cards[cut_point:] + self.cards[:cut_point]
-		def order(self):
-			self.cards.sort()
+		
+	def order(self):
+		self.cards.sort()
 		
 	def choose_random(self, remove = True):
 		if len(self.cards) == 0:
